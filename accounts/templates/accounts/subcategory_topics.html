@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}{{ subcategory.name }}{% endblock %}
+
+{% block content %}
+<style>
+    .topic-list {
+        margin-top: 20px;
+    }
+    .topic {
+        margin-bottom: 20px;
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        background-color: #f9f9f9;
+        margin: 3px 0;  /* Внешние отступы сверху и снизу */
+    }
+    .add-topic-form {
+        margin-top: 40px;
+    }
+</style>
+
+<div class="container">
+    <h1 class="text-center"> {{ subcategory.name }}</h1>
+    <div class="topic-list">
+        {% for topic in topics %}
+        <div class="topic">
+            <a href="{% url 'topic_detail' topic.id %}"> {{ topic.title }}</a>
+            <p>Автор: {{ topic.author }}</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="add-topic-form">
+
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">создать тему</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

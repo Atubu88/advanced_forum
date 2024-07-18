@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Forum{% endblock %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .header {
+            background-color: #87CEEB;  /* Небесный цвет */
+            padding: 25px;
+            border-radius: 15px;  /* Закругленные углы */
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .header h1 {
+            margin: 0;
+            font-family: 'Great Vibes', cursive;  /* Добавлен стиль для соединения букв */
+            text-transform: uppercase;  /* Прописные буквы */
+            font-size: 2.2em;  /* Уменьшение размера шрифта */
+            color: white;  /* Белый цвет букв */
+        }
+        .header img.logo {
+            position: absolute;
+            top: 50%;
+            left: 20px;
+            transform: translateY(-50%);
+            height: 89px;  /* Высота логотипа */
+            border-radius: 15px; /* Закругление всех углов */
+            transform: translate(-5mm, -50%)
+        }
+        .auth-buttons {
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+        }
+        .auth-buttons a {
+            margin-left: 10px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .boxed {
+            border: 2px solid #87CEEB;  /* Небесный цвет линии рамки */
+            border-radius: 15px;
+            padding: 20px;
+            margin: 5mm 20mm 25mm 20mm; /* Отступы: сверху 5 мм, по бокам 20 мм, снизу 25 мм */
+            background-color: #F0F0F0;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+        .topic-list {
+            margin-top: 20px;
+        }
+        .category h2 {
+            font-size: 1.2em; /* Уменьшаем размер шрифта заголовка */
+        }
+        .topic, .comment {
+            margin-bottom: 20px;
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            margin: 3px 0;  /* Внешние отступы сверху и снизу */
+        }
+        .add-comment-form {
+            margin-top: 40px;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;  /* Уменьшает высоту текстового поля */
+            resize: none;  /* Запрещает изменение размера текстового поля */
+        }
+    </style>
+</head>
+<body>
+    <div class="boxed">
+        <div class="container">
+            <div class="header">
+                {% load static %}
+                <img src="{% static 'images/logo.png' %}" alt="Логотип" class="logo">
+                <h1>كن على الحق</h1>  <!-- Изменено на прописные буквы и текст "БУДЬ НА ИСТИНЕ" -->
+                <div class="auth-buttons">
+                    <a class="btn btn-primary" href="{% url 'forum_home' %}">Главная</a>
+                    {% if user.is_authenticated %}
+                        <a class="btn btn-primary" href="{% url 'account_logout' %}">Выход</a>
+                    {% else %}
+                        <a class="btn btn-primary" href="{% url 'account_login' %}">Вход</a>
+                        <a class="btn btn-primary" href="{% url 'account_signup' %}">Регистрация</a>
+                    {% endif %}
+                </div>
+            </div>
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+</body>
+</html>

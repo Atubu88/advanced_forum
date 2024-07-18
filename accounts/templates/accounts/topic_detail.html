@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}{{ topic.title }}{% endblock %}
+
+{% block content %}
+<style>
+    .topic-list {
+        margin-top: 20px;
+    }
+    .topic {
+        margin-bottom: 20px;
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        background-color: #f9f9f9;
+        margin: 3px 0;  /* Внешние отступы сверху и снизу */
+    }
+    .comment {
+        margin-bottom: 20px;
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        background-color: #f9f9f9;
+        margin: 3px 0;  /* Внешние отступы сверху и снизу */
+    }
+    .add-comment-form {
+        margin-top: 40px;
+    }
+</style>
+
+<div class="container">
+    <h1 class="text-center">{{ topic.title }}</h1>
+    <p>{{ topic.body }}</p>
+    <p>by {{ topic.author }}</p>
+    <div class="comment-list">
+        <ul>
+            {% for comment in comments %}
+            <li class="comment">
+                <p>{{ comment.body }}</p>
+                <p>by {{ comment.author }} at {{ comment.created_at }}</p>
+                {% if request.user == comment.author or request.user.is_superuser %}
+                <!-- Кнопка редактирования комментария -->
+                <a href="{% url 'edit_comment' comment.id %}" class="btn btn-secondary">Редактировать</a>
+                <!-- Форма удаления комментария -->
+                <form method="post" action="{% url 'delete_comment' comment.id %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Удалить</button>
+                </form>
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Отправить</button>
+    </form>
+</div>
+{% endblock %}

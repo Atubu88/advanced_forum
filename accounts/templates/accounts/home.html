@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Forum Home{% endblock %}
+
+{% block content %}
+<style>
+    .category-list {
+        display: flex;
+        flex-direction: column;  /* Изменено для вертикального расположения */
+        align-items: center;     /* Выравнивание по центру */
+        width: 100%;             /* Использовать всю ширину контейнера */
+    }
+
+    .category {
+        margin-bottom: 20px;
+        width: 990px;
+        padding: 10px;
+        border: 2px solid #87CEFA;
+        border-radius: 10px;
+        background-color: #f9f9f9;
+        margin: 3px;
+    }
+    .subcategory-list {
+        list-style-type: none;
+        padding-left: 0;
+    }
+    .subcategory-item {
+        margin-bottom: 0px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 1px;
+        border: 1px solid #87CEFA;
+
+    }
+    .category h2 {
+        text-align: center; /* Выровнять текст по центру */
+        font-style: italic;         /* Курсивный текст */
+        text-decoration: underline; /* Подчеркнуть текст */
+    }
+</style>
+
+<div class="category-list">
+    {% for category in categories %}
+    <div class="category">
+        <h2>{{ category.name }}</h2>
+        <ul class="subcategory-list">
+            {% for subcategory in category.subcategories.all %}
+            <li class="subcategory-item">
+                <a href="{% url 'subcategory_topics' subcategory.id %}">{{ subcategory.name }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
