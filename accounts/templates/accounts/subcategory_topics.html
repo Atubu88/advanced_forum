@@ -22,22 +22,22 @@
 </style>
 
 <div class="container">
-    <h1 class="text-center"> {{ subcategory.name }}</h1>
+    <h1 class="text-center">{{ subcategory.name }}</h1>
     <div class="topic-list">
         {% for topic in topics %}
         <div class="topic">
-            <a href="{% url 'topic_detail' topic.id %}"> {{ topic.title }}</a>
+            <a href="{% url 'topic_detail' topic.id %}">{{ topic.title }}</a>
             <p>Автор: {{ topic.author }}</p>
+            <p>{{ topic.content }}</p> <!-- Отображение контента -->
         </div>
         {% endfor %}
     </div>
 
     <div class="add-topic-form">
-
         <form method="POST">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">создать тему</button>
+            <button type="submit" class="btn btn-primary">Создать тему</button>
         </form>
     </div>
 </div>

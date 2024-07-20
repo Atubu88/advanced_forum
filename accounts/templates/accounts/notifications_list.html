@@ -1,0 +1,14 @@
+{% if notifications %}
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Уведомления ({{ notifications.count }})
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            {% for notification in notifications %}
+                <a class="dropdown-item" href="{% url 'notifications' %}">{{ notification.message }}</a>
+            {% endfor %}
+        </div>
+    </div>
+{% else %}
+    <span>Нет уведомлений</span>
+{% endif %}

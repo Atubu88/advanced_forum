@@ -4,6 +4,15 @@
 
 {% block content %}
 <style>
+    .notification {
+        background-color: #ffeb3b;
+        padding: 0px; /* Уменьшено значение padding */
+        border-radius: 5px; /* Уменьшено значение border-radius */
+        margin-bottom: 10px; /* Уменьшено значение margin-bottom */
+        font-size: 0.8em; /* Уменьшен размер шрифта */
+        position: relative; /* Для возможности использования top для позиционирования */
+        top: -50px; /* Перемещение уведомления выше */
+    }
     .topic-list {
         margin-top: 20px;
     }
@@ -14,7 +23,7 @@
         border: 1px solid #ddd;
         border-radius: 10px;
         background-color: #f9f9f9;
-        margin: 3px 0;  /* Внешние отступы сверху и снизу */
+        margin: 3px 0;
     }
     .comment {
         margin-bottom: 20px;
@@ -23,7 +32,7 @@
         border: 1px solid #ddd;
         border-radius: 10px;
         background-color: #f9f9f9;
-        margin: 3px 0;  /* Внешние отступы сверху и снизу */
+        margin: 3px 0;
     }
     .add-comment-form {
         margin-top: 40px;
@@ -32,13 +41,26 @@
 
 <div class="container">
     <h1 class="text-center">{{ topic.title }}</h1>
-    <p>{{ topic.body }}</p>
+    <p>{{ topic.body }}</p> <!-- Обновлено с {{ topic.content }} на {{ topic.body }} -->
     <p>by {{ topic.author }}</p>
+
+    <!-- Блок уведомлений -->
+    <div class="notifications">
+        {% for notification in notifications %}
+            <div class="notification">
+                <p>{{ notification.message|safe }}</p> <!-- Обновлено с {{ notification.message }} на {{ notification.message|safe }} -->
+                {% if not notification.is_read %}
+                <a href="{% url 'mark_as_read' notification.id %}" class="btn btn-success btn-sm">отметить как прочитанное</a>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+
     <div class="comment-list">
         <ul>
             {% for comment in comments %}
-            <li class="comment">
-                <p>{{ comment.body }}</p>
+            <li class="comment" id="comment-{{ comment.id }}"> <!-- Добавлен уникальный идентификатор -->
+                <p>{{ comment.body }}</p> <!-- Обновлено с {{ comment.content }} на {{ comment.body }} -->
                 <p>by {{ comment.author }} at {{ comment.created_at }}</p>
                 {% if request.user == comment.author or request.user.is_superuser %}
                 <!-- Кнопка редактирования комментария -->

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Notifications{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="text-center">Уведомления</h1>
+    <ul class="list-group">
+        {% for notification in notifications %}
+            <li class="list-group-item {{ notification.is_read|yesno:'list-group-item-secondary,list-group-item-primary' }}">
+                <span>{{ notification.message|safe }}</span>  <!-- Убедитесь, что здесь используется фильтр safe -->
+                <small class="text-muted">{{ notification.created_at }}</small>
+                {% if not notification.is_read %}
+                <a href="{% url 'mark_as_read' notification.id %}" class="btn btn-success btn-sm">Mark as read</a>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
+
