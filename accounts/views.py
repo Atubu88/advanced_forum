@@ -6,25 +6,36 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.http import HttpResponseForbidden
 from .utils import notify_subscribers
+from allauth.account.views import LoginView, SignupView
+from .forms import CustomSignupForm
+from .forms import CustomLoginForm
+from django.db.models import Prefetch
+
 
 def forum_home(request):
-    categories = Category.objects.all()
+    categories = Category.objects.all().prefetch_related('subcategories')
     notifications = []
     if request.user.is_authenticated:
         notifications = Notification.objects.filter(user=request.user, is_read=False)
     return render(request, 'accounts/home.html', {'categories': categories, 'notifications': notifications})
 
+
 class SubcategoryTopicsView(View):
     def get(self, request, subcategory_id):
-        subcategory = get_object_or_404(Subcategory, id=subcategory_id)
-        topics = subcategory.topics.all()
+        subcategory = get_object_or_404(
+            Subcategory.objects.prefetch_related(
+                Prefetch('topics', queryset=Topic.objects.select_related('author'))
+            ),
+            id=subcategory_id
+        )
         form = TopicForm()
         notifications = []
         if request.user.is_authenticated:
-            notifications = Notification.objects.filter(user=request.user, is_read=False)
+            notifications = Notification.objects.filter(user=request.user, is_read=False).select_related('user')
+
         return render(request, 'accounts/subcategory_topics.html', {
             'subcategory': subcategory,
-            'topics': topics,
+            'topics': subcategory.topics.all(),
             'form': form,
             'notifications': notifications
         })
@@ -51,17 +62,23 @@ class SubcategoryTopicsView(View):
             'notifications': notifications
         })
 
+
 @method_decorator(login_required, name='dispatch')
 class TopicDetailView(View):
     def get(self, request, topic_id):
-        topic = get_object_or_404(Topic, id=topic_id)
-        comments = topic.comments.all()
+        topic = get_object_or_404(
+            Topic.objects.select_related('author').prefetch_related(
+                Prefetch('comments', queryset=Comment.objects.select_related('author'))
+            ),
+            id=topic_id
+        )
         form = CommentForm()
-        notifications = Notification.objects.filter(user=request.user, is_read=False)
+        notifications = Notification.objects.filter(user=request.user, is_read=False).select_related('user')
         can_delete_any_comment = request.user.has_perm('accounts.can_delete_any_comment')
+
         return render(request, 'accounts/topic_detail.html', {
             'topic': topic,
-            'comments': comments,
+            'comments': topic.comments.all(),
             'form': form,
             'can_delete_any_comment': can_delete_any_comment,
             'notifications': notifications
@@ -69,7 +86,12 @@ class TopicDetailView(View):
 
     @method_decorator(login_required)
     def post(self, request, topic_id):
-        topic = get_object_or_404(Topic, id=topic_id)
+        topic = get_object_or_404(
+            Topic.objects.select_related('author').prefetch_related(
+                Prefetch('comments', queryset=Comment.objects.select_related('author'))
+            ),
+            id=topic_id
+        )
         form = CommentForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
@@ -79,16 +101,18 @@ class TopicDetailView(View):
             notify_subscribers(comment)
             Subscription.objects.get_or_create(user=request.user, topic=topic)
             return redirect('topic_detail', topic_id=topic.id)
-        comments = topic.comments.all()
-        notifications = Notification.objects.filter(user=request.user, is_read=False)
+
+        notifications = Notification.objects.filter(user=request.user, is_read=False).select_related('user')
         can_delete_any_comment = request.user.has_perm('accounts.can_delete_any_comment')
+
         return render(request, 'accounts/topic_detail.html', {
             'topic': topic,
-            'comments': comments,
+            'comments': topic.comments.all(),
             'form': form,
             'can_delete_any_comment': can_delete_any_comment,
             'notifications': notifications
         })
+
 
 @login_required
 def edit_comment(request, comment_id):
@@ -106,6 +130,7 @@ def edit_comment(request, comment_id):
 
     return render(request, 'accounts/edit_comment.html', {'form': form, 'comment': comment})
 
+
 @login_required
 def delete_comment(request, comment_id):
     comment = get_object_or_404(Comment, id=comment_id)
@@ -118,10 +143,12 @@ def delete_comment(request, comment_id):
 
     return render(request, 'accounts/delete_comment.html', {'comment': comment})
 
+
 @login_required
 def notifications_view(request):
     notifications = Notification.objects.filter(user=request.user, is_read=False)
     return render(request, 'accounts/notifications.html', {'notifications': notifications})
+
 
 @login_required
 def mark_as_read(request, notification_id):
@@ -130,3 +157,13 @@ def mark_as_read(request, notification_id):
         notification.is_read = True
         notification.save()
     return redirect('notifications')
+
+
+class CustomLoginView(LoginView):
+    template_name = 'accounts/login.html'
+    form_class = CustomLoginForm
+
+
+class CustomSignupView(SignupView):
+    form_class = CustomSignupForm
+    template_name = 'accounts/signup.html'

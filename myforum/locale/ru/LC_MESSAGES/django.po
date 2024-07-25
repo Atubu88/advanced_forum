@@ -1,0 +1,11 @@
+msgid "Username"
+msgstr "Имя пользователя"
+
+msgid "Email"
+msgstr "Электронная почта"
+
+msgid "Password"
+msgstr "Пароль"
+
+msgid "Password (again)"
+msgstr "Подтвердите пароль"

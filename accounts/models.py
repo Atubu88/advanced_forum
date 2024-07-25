@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.conf import settings
 
 
 class Category(models.Model):
@@ -10,7 +11,7 @@ class Category(models.Model):
 
 
 class Subcategory(models.Model):
-    category = models.ForeignKey(Category, related_name='subcategories', on_delete=models.CASCADE)
+    category = models.ForeignKey('Category', on_delete=models.CASCADE, related_name='subcategories', db_index=True)  # Добавление индекса
     name = models.CharField(max_length=100)
 
     def __str__(self):
@@ -45,10 +46,10 @@ class Comment(models.Model):
 
 
 class Notification(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)  # Пользователь, которому предназначено уведомление
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, db_index=True)  # Добавление индекса
     message = models.TextField()  # Текст уведомления
     created_at = models.DateTimeField(auto_now_add=True)  # Время создания уведомления
-    is_read = models.BooleanField(default=False)  # Статус прочтения уведомления
+    is_read = models.BooleanField(default=False, db_index=True)  # Статус прочтения уведомления
 
     def __str__(self):
         return f"Notification for {self.user.username}"

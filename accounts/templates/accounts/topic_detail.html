@@ -37,12 +37,26 @@
     .add-comment-form {
         margin-top: 40px;
     }
+    /* Уточнённые стили для всех кнопок в форме */
+    form .btn {
+        width: auto;
+        display: inline-block;
+        margin-bottom: 10px;
+    }
+    /* Стили для кнопок */
+    .btn {
+        display: inline-block;
+        margin: 10px 0;
+    }
+
+
+
 </style>
 
 <div class="container">
     <h1 class="text-center">{{ topic.title }}</h1>
     <p>{{ topic.body }}</p> <!-- Обновлено с {{ topic.content }} на {{ topic.body }} -->
-    <p>by {{ topic.author }}</p>
+    <p>Автор {{ topic.author }}</p>
 
     <!-- Блок уведомлений -->
     <div class="notifications">
@@ -61,7 +75,7 @@
             {% for comment in comments %}
             <li class="comment" id="comment-{{ comment.id }}"> <!-- Добавлен уникальный идентификатор -->
                 <p>{{ comment.body }}</p> <!-- Обновлено с {{ comment.content }} на {{ comment.body }} -->
-                <p>by {{ comment.author }} at {{ comment.created_at }}</p>
+                <p>Автор {{ comment.author }} в {{ comment.created_at }}</p>
                 {% if request.user == comment.author or request.user.is_superuser %}
                 <!-- Кнопка редактирования комментария -->
                 <a href="{% url 'edit_comment' comment.id %}" class="btn btn-secondary">Редактировать</a>
