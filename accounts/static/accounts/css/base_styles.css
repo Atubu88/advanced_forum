@@ -1,0 +1,221 @@
+.header {
+    background-color: #87CEEB;
+    padding: 25px;
+    border-radius: 15px;
+    text-align: center;
+    margin-bottom: 20px;
+    position: relative;
+}
+.header h1 {
+    margin: 0;
+    font-family: 'Great Vibes', cursive;
+    text-transform: uppercase;
+    font-size: 2.7em;
+    color: white;
+    text-shadow: 4px 2px 2px rgba(0, 0, 0, 0.9);
+}
+.header img.logo {
+    position: absolute;
+    top: 50%;
+    left: 0px;
+    transform: translateY(-50%);
+    height: 89px;
+    border-radius: 15px;
+}
+.auth-buttons {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    border-radius: 20px
+}
+.auth-buttons a {
+    margin-left: 10px;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 20px
+}
+.notifications {
+    position: absolute;
+    top: 50%;
+    right: 230px;
+    transform: translateY(-50%);
+    color: white;
+}
+.boxed {
+    border: 2px solid #87CEEB;
+    border-radius: 15px;
+    padding: 20px;
+    margin: 5mm 15mm 0mm 15mm;
+    min-height: 100vh; /* Добавьте минимальную высоту */
+    background-color: #F0F0F0;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    justify-content: space-between; /* Центрируйте содержимое по вертикали */
+}
+.topic-list {
+    margin-top: 10px;
+}
+.category, .topic, .comment {
+    display: flex;
+    flex-direction: column;
+    width: 100% !important; /* Измените ширину на 90% */
+    margin: 0 auto !important; /* Центрируйте элемент */
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    word-wrap: break-word;
+    overflow: hidden;
+}
+.category {
+    padding: 10px;
+}
+.category h2 {
+    font-size: 1.2em;
+    margin: 0;
+}
+.topic, .comment {
+    margin-bottom: 20px;
+    margin: 3px 0;
+}
+.add-comment-form {
+    margin-top: 40px;
+}
+textarea {
+    width: 100%;
+    height: 100px;
+    resize: none;
+}
+.notification {
+    background-color: #ffeb3b;
+    padding: 5px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-size: 0.8em;
+    position: relative;
+    top: -10px;
+}
+.form-container {
+    display: flex;
+    justify-content: center;
+    min-height: calc(100vh - 200px);
+    padding-top: 50px;
+}
+.form-box {
+    width: 100%;
+    max-width: 450px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+form input, form button {
+    width: 100%;
+    margin-bottom: 10px;
+}
+.footer {
+    background-color: #f1f1f1;
+    padding: 20px;
+    text-align: center;
+    border-top: 1px solid #e7e7e7;
+    margin-top: 20px;
+    position: relative;
+}
+.footer a {
+    color: #ffffff;
+    background-color: #0088cc;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+.footer a:hover {
+    background-color: #006699;
+}
+.footer-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+    flex-direction: column;
+}
+
+/* Адаптивные стили для мобильных устройств */
+@media (max-width: 768px) {
+    .header {
+        padding: 15px;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    .header h1 {
+        font-size: 1.5em;
+    }
+    .header img.logo {
+        position: relative;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        height: 70px;
+    }
+    .auth-buttons {
+        position: relative;
+        top: 10px;
+        right: 0;
+        transform: none;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 10px;
+    }
+    .auth-buttons a {
+        margin-left: 0;
+        margin-bottom: 10px;
+    }
+    .notifications {
+        position: relative;
+        top: 10px;
+        right: 0;
+        transform: none;
+        text-align: center;
+        margin-top: 10px;
+    }
+    .boxed {
+        padding: 10px;
+        margin: 10px;
+        width: 100%;
+        min-height: 100vh; /* Добавьте минимальную высоту */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .category, .topic, .comment {
+        width: 100%;
+        padding: 5px;
+        overflow-x: auto;
+    }
+    .form-container {
+        padding-top: 20px;
+    }
+    .form-box {
+        width: 100%;
+        max-width: 100%;
+    }
+    .footer-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    .footer a {
+        display: block;
+        margin-top: 10px;
+    }
+    .comment {
+        width: 100%; /* Убедитесь, что комментарии занимают всю ширину */
+        padding: 10px; /* Добавьте отступы для лучшей читаемости */
+        box-sizing: border-box;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        background-color: #f9f9f9;
+    }
+}

@@ -1,0 +1,35 @@
+.category-list {
+    display: flex;
+    flex-direction: column;  /* Изменено для вертикального расположения */
+    align-items: center;     /* Выравнивание по центру */
+    width: 100%;             /* Использовать всю ширину контейнера */
+}
+
+.category {
+    margin-bottom: 20px;
+    width: 990px;
+    padding: 10px;
+    border: 2px solid #87CEFA;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    margin: 3px;
+}
+
+.subcategory-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.subcategory-item {
+    margin-bottom: 0px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 1px;
+    border: 1px solid #87CEFA;
+}
+
+.category h2 {
+    text-align: center; /* Выровнять текст по центру */
+    font-style: italic; /* Курсивный текст */
+    text-decoration: underline; /* Подчеркнуть текст */
+}

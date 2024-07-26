@@ -1,25 +1,13 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}{{ subcategory.name }}{% endblock %}
 
+{% block extra_css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'accounts/css/subcategory_topics_styles.css' %}">
+{% endblock %}
+
 {% block content %}
-<style>
-    .topic-list {
-        margin-top: 20px;
-    }
-    .topic {
-        margin-bottom: 20px;
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 10px;
-        background-color: #f9f9f9;
-        margin: 3px 0;  /* Внешние отступы сверху и снизу */
-    }
-    .add-topic-form {
-        margin-top: 40px;
-    }
-</style>
 
 <div class="container">
     <h1 class="text-center">{{ subcategory.name }}</h1>

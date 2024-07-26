@@ -1,58 +1,14 @@
 {% extends "base.html" %}
 
+{% load static %}
+
 {% block title %}{{ topic.title }}{% endblock %}
 
+{% block extra_css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'accounts/css/topic_detail_styles.css' %}">
+{% endblock %}
+
 {% block content %}
-<style>
-    .notification {
-        background-color: #ffeb3b;
-        padding: 0px; /* Уменьшено значение padding */
-        border-radius: 5px; /* Уменьшено значение border-radius */
-        margin-bottom: 10px; /* Уменьшено значение margin-bottom */
-        font-size: 0.8em; /* Уменьшен размер шрифта */
-        position: relative; /* Для возможности использования top для позиционирования */
-        top: -50px; /* Перемещение уведомления выше */
-    }
-    .topic-list {
-        margin-top: 20px;
-    }
-    .topic {
-        margin-bottom: 20px;
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 10px;
-        background-color: #f9f9f9;
-        margin: 3px 0;
-    }
-    .comment {
-        margin-bottom: 20px;
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 10px;
-        background-color: #f9f9f9;
-        margin: 3px 0;
-    }
-    .add-comment-form {
-        margin-top: 40px;
-    }
-    /* Уточнённые стили для всех кнопок в форме */
-    form .btn {
-        width: auto;
-        display: inline-block;
-        margin-bottom: 10px;
-    }
-    /* Стили для кнопок */
-    .btn {
-        display: inline-block;
-        margin: 10px 0;
-    }
-
-
-
-</style>
-
 <div class="container">
     <h1 class="text-center">{{ topic.title }}</h1>
     <p>{{ topic.body }}</p> <!-- Обновлено с {{ topic.content }} на {{ topic.body }} -->
