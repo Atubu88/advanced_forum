@@ -194,4 +194,4 @@ if DEBUG:
         'SHOW_TOOLBAR_CALLBACK': lambda request: DEBUG,
     }
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.0.34','Albara.pythonanywhere.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.0.34','advanced-forum-f12v1fl03-atubus-projects.vercel.app']
