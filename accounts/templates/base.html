@@ -6,9 +6,9 @@
     <title>{% block title %}Forum{% endblock %}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     {% load static %}
- <link rel="stylesheet" type="text/css" href="/static/accounts/css/base_styles.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'accounts/css/base_styles.css' %}">
     {% block extra_css %}{% endblock %}
-    <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
 </head>
 <body>
     <div class="boxed">
