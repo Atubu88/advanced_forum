@@ -14,6 +14,7 @@ from pathlib import Path
 import os
 import environ
 from dotenv import load_dotenv
+from urllib.parse import urlparse
 
 # Установка BASE_DIR
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -42,7 +43,7 @@ load_dotenv()
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 # Application definition
 
@@ -73,6 +74,7 @@ MIDDLEWARE = [
     'allauth.account.middleware.AccountMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 
 ]
 
@@ -129,10 +131,19 @@ WSGI_APPLICATION = 'myforum.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+url = urlparse(os.getenv('DATABASE_URL'))
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': url.path[1:],  # убираем начальный символ '/'
+        'USER': url.username,
+        'PASSWORD': url.password,
+        'HOST': url.hostname,
+        'PORT': url.port,
+        'OPTIONS': {
+            'sslmode': 'require',  # Указываем, что нужно использовать SSL
+        },
     }
 }
 
@@ -198,3 +209,22 @@ if DEBUG:
     }
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.0.34', '.vercel.app']
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': BASE_DIR / 'error.log',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    },
+}
