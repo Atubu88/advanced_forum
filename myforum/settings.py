@@ -210,25 +210,8 @@ if DEBUG:
         'SHOW_TOOLBAR_CALLBACK': lambda request: DEBUG,
     }
 
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'file': {
-            'level': 'ERROR',
-            'class': 'logging.FileHandler',
-            'filename': BASE_DIR / 'error.log',
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['file'],
-            'level': 'ERROR',
-            'propagate': True,
-        },
-    },
-}
-
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '.vercel.app', 'advanced-forum-fbwn7cuad-atubus-projects.vercel.app']
 
+SECURE_SSL_REDIRECT = True
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
