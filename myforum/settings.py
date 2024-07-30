@@ -193,6 +193,8 @@ STATICFILES_DIRS = [
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+SECURE_SSL_REDIRECT = True
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
@@ -208,7 +210,6 @@ if DEBUG:
         'SHOW_TOOLBAR_CALLBACK': lambda request: DEBUG,
     }
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.0.34', '.vercel.app']
 
 LOGGING = {
     'version': 1,
@@ -228,3 +229,6 @@ LOGGING = {
         },
     },
 }
+
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '.vercel.app', 'advanced-forum-fbwn7cuad-atubus-projects.vercel.app']
+
