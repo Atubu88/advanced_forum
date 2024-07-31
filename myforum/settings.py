@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     'accounts',
     'django.contrib.sites',
@@ -60,6 +61,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'debug_toolbar',
+
 ]
 
 MIDDLEWARE = [
@@ -209,5 +211,3 @@ if DEBUG:
     }
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '.vercel.app']
-
-
