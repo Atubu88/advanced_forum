@@ -1,19 +1,29 @@
 {
-    "version": 2,
-    "functions": {
-        "api/*.py": {
-            "runtime": "vercel-python@3.11",
-            "maxDuration": 60
-        }
+  "version": 2,
+  "builds": [
+    {
+      "src": "accounts/wsgi.py",
+      "use": "@vercel/python"
     },
-    "routes": [
-        {
-            "src": "/static/(.*)",
-            "dest": "/staticfiles/$1"
-        },
-        {
-            "src": "/(.*)",
-            "dest": "myforum/wsgi.py"
-        }
-    ]
+    {
+      "src": "staticfiles/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/static/(.*)",
+      "dest": "/staticfiles/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "accounts/wsgi.py"
+    }
+  ],
+  "functions": {
+    "accounts/wsgi.py": {
+      "runtime": "python@3.11",
+      "maxDuration": 30
+    }
+  }
 }
