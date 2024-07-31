@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "functions": {
-    "myforum/wsgi.py": {
-      "runtime": "vercel-python@0.5.1",
-      "maxDuration": 30
+  "builds": [
+    {
+      "src": "myforum/wsgi.py",
+      "use": "@vercel/python",
+      "config": { "runtime": "python3.11" }
     }
-  },
+  ],
   "routes": [
     {
       "src": "/static/(.*)",
