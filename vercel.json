@@ -1,19 +1,19 @@
 {
   "version": 2,
-  "functions": {
-    "accounts/wsgi.py": {
-      "runtime": "vercel-python@1.0.0",
-      "maxDuration": 30
+  "builds": [
+    {
+      "src": "myforum/wsgi.py",
+      "use": "@vercel/python"
     }
-  },
+  ],
   "routes": [
     {
       "src": "/static/(.*)",
-      "dest": "/staticfiles/$1"
+      "dest": "/staticfiles_temp/$1"
     },
     {
       "src": "/(.*)",
-      "dest": "accounts/wsgi.py"
+      "dest": "myforum/wsgi.py"
     }
   ]
 }
