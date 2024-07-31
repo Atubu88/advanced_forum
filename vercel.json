@@ -2,7 +2,7 @@
   "version": 2,
   "functions": {
     "myforum/wsgi.py": {
-      "runtime": "python3.11",
+      "runtime": "vercel-python@0.5.1",
       "maxDuration": 30
     }
   },
