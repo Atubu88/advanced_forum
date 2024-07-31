@@ -13,7 +13,7 @@
   "functions": {
     "myforum/wsgi.py": {
       "runtime": "@vercel/python",
-      "maxDuration": 60
+      "maxDuration": 30
     }
   },
   "routes": [
