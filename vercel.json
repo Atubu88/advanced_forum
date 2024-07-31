@@ -1,15 +1,11 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "accounts/wsgi.py",
-      "use": "@vercel/python"
-    },
-    {
-      "src": "staticfiles/**",
-      "use": "@vercel/static"
+  "functions": {
+    "accounts/wsgi.py": {
+      "runtime": "vercel-python@3.11",
+      "maxDuration": 30
     }
-  ],
+  },
   "routes": [
     {
       "src": "/static/(.*)",
@@ -19,11 +15,5 @@
       "src": "/(.*)",
       "dest": "accounts/wsgi.py"
     }
-  ],
-  "functions": {
-    "accounts/wsgi.py": {
-      "runtime": "python@3.11",
-      "maxDuration": 30
-    }
-  }
+  ]
 }
