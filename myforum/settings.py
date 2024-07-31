@@ -41,9 +41,10 @@ else:
 load_dotenv()
 
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
+DEBUG = os.getenv('DJANGO_DEBUG', 'False') == 'True'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+
 
 # Application definition
 
