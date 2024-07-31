@@ -4,9 +4,22 @@
     {
       "src": "myforum/wsgi.py",
       "use": "@vercel/python"
+    },
+    {
+      "src": "staticfiles/**",
+      "use": "@vercel/static"
     }
   ],
+  "functions": {
+    "myforum/wsgi.py": {
+      "maxDuration": 30
+    }
+  },
   "routes": [
+    {
+      "src": "/static/(.*)",
+      "dest": "/staticfiles/$1"
+    },
     {
       "src": "/(.*)",
       "dest": "myforum/wsgi.py"
