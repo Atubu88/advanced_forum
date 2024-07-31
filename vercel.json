@@ -3,14 +3,13 @@
   "builds": [
     {
       "src": "myforum/wsgi.py",
-      "use": "@vercel/python",
-      "config": { "runtime": "python3.11" }
+      "use": "@vercel/python"
     }
   ],
   "routes": [
     {
       "src": "/static/(.*)",
-      "dest": "/staticfiles/$1"
+      "dest": "/staticfiles_temp/$1"
     },
     {
       "src": "/(.*)",
