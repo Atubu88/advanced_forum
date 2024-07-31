@@ -193,7 +193,7 @@ STATICFILES_DIRS = [
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-SECURE_SSL_REDIRECT = True
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -213,5 +213,5 @@ if DEBUG:
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '.vercel.app', 'advanced-forum-fbwn7cuad-atubus-projects.vercel.app']
 
 SECURE_SSL_REDIRECT = True
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
+
+
