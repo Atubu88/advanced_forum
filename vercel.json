@@ -4,12 +4,16 @@
     {
       "src": "myforum/wsgi.py",
       "use": "@vercel/python"
+    },
+    {
+      "src": "staticfiles/**",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
     {
       "src": "/static/(.*)",
-      "dest": "/staticfiles_temp/$1"
+      "dest": "/staticfiles/$1"
     },
     {
       "src": "/(.*)",

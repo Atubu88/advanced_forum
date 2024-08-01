@@ -6,9 +6,10 @@
     <title>{% block title %}Forum{% endblock %}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     {% load static %}
-    <link rel="stylesheet" href="{% static 'accounts/css/accounts_base_styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'accounts/css/base_styles.css' %}">
     {% block extra_css %}{% endblock %}
-    <link rel="icon" type="image/png" href="{% static 'accounts/images/accounts_favicon.png' %}">
+    <link rel="icon" type="image/png" href="{% static 'accounts/images/favicon.png' %}">
+
 
 </head>
 <body>
@@ -16,7 +17,7 @@
         <div class="container">
             <div class="header">
                 {% load static %}
-                <img src="{% static 'images/accounts_logo.png' %}" alt="Логотип" class="logo">
+                <img src="{% static 'images/logo.png' %}" alt="Логотип" class="logo">
                 <h1>مهاجرون</h1>
                 <div class="auth-buttons">
                     <a class="btn btn-primary" href="{% url 'forum_home' %}">Главная</a>
