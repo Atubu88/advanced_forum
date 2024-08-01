@@ -70,7 +70,7 @@ MIDDLEWARE = [
 
 ]
 
-STATICFILES_STORAGE = 'accounts.custom_storage.IgnoreMissingManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
