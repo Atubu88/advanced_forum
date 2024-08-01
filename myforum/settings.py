@@ -208,3 +208,7 @@ if DEBUG:
     }
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.0.34', '.vercel.app']
+
+# В settings.py добавьте следующие строки для использования кэширования сессий:
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+SESSION_CACHE_ALIAS = 'default'

@@ -10,14 +10,20 @@ from allauth.account.views import LoginView, SignupView
 from .forms import CustomSignupForm
 from .forms import CustomLoginForm
 from django.db.models import Prefetch
+from django.core.cache import cache
 
 
 def forum_home(request):
-    categories = Category.objects.all().prefetch_related('subcategories')
+    categories = cache.get('categories')
+    if not categories:
+        categories = Category.objects.only('name').prefetch_related('subcategories').all()
+        cache.set('categories', categories, timeout=60*15)  # Кэш на 15 минут
+
     notifications = []
     if request.user.is_authenticated:
-        notifications = Notification.objects.filter(user=request.user, is_read=False)
+        notifications = Notification.objects.filter(user=request.user, is_read=False).select_related('user')
     return render(request, 'accounts/home.html', {'categories': categories, 'notifications': notifications})
+
 
 
 class SubcategoryTopicsView(View):
