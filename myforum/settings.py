@@ -14,6 +14,7 @@ from pathlib import Path
 import os
 import environ
 from dotenv import load_dotenv
+from urllib.parse import urlparse
 
 # Установка BASE_DIR
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -129,10 +130,19 @@ WSGI_APPLICATION = 'myforum.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+url = urlparse(os.getenv('DATABASE_URL'))
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': url.path[1:],  # убираем начальный символ '/'
+        'USER': url.username,
+        'PASSWORD': url.password,
+        'HOST': url.hostname,
+        'PORT': url.port,
+        'OPTIONS': {
+            'sslmode': 'require',  # Указываем, что нужно использовать SSL
+        },
     }
 }
 
