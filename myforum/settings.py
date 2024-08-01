@@ -129,7 +129,7 @@ WSGI_APPLICATION = 'myforum.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
+DATABASE_URL = os.environ.get('DATABASE_URL')
 url = urlparse(os.getenv('DATABASE_URL'))
 
 DATABASES = {
