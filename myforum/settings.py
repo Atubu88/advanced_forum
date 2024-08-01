@@ -211,3 +211,9 @@ ALLOWED_HOSTS = [
     'advanced-forum-git-master-atubus-projects.vercel.app',
     'advanced-forum-6mgn3q8vp-atubus-projects.vercel.app'
 ]
+
+if 'whitenoise.storage.CompressedManifestStaticFilesStorage' in STATICFILES_STORAGE:
+    try:
+        import whitenoise
+    except ImportError:
+        pass
