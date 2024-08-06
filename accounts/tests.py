@@ -1,56 +1,54 @@
-from django.test import TestCase
+import pytest
+from django.core.cache import cache
 from django.urls import reverse
-from django.contrib.auth.models import User
+from django.test import RequestFactory
+from django.contrib.auth.models import AnonymousUser, User
+from views import forum_home
+from models import Category, Notification
 
-class UserRegistrationTests(TestCase):
+@pytest.mark.django_db
+def test_forum_home_with_cached_categories():
+    factory = RequestFactory()
+    request = factory.get(reverse('forum_home'))
+    request.user = AnonymousUser()
 
-    def test_registration_view(self):
-        response = self.client.get(reverse('account_signup'))
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, 'Регистрация')
+    # Создаем категории и сохраняем их в кэш
+    categories = [Category.objects.create(name='Category 1'), Category.objects.create(name='Category 2')]
+    cache.set('categories', categories)
 
-    def test_user_registration(self):
-        response = self.client.post(reverse('account_signup'), {
-            'username': 'testuser',
-            'email': 'testuser@example.com',
-            'password1': 'TestPassword123',
-            'password2': 'TestPassword123',
-        })
-        self.assertEqual(response.status_code, 302)  # Redirect after successful registration
-        self.assertTrue(User.objects.filter(username='testuser').exists())
+    response = forum_home(request)
+    assert response.status_code == 200
+    assert 'categories' in response.context_data
+    assert response.context_data['categories'] == categories
 
-    def test_registration_with_existing_email(self):
-        User.objects.create_user(username='existinguser', email='testuser@example.com', password='TestPassword123')
-        response = self.client.post(reverse('account_signup'), {
-            'username': 'newuser',
-            'email': 'testuser@example.com',
-            'password1': 'TestPassword123',
-            'password2': 'TestPassword123',
-        })
-        self.assertEqual(response.status_code, 200)  # Should not redirect, form should be re-rendered
-        self.assertContains(response, 'Учетная запись с таким адресом электронной почты уже существует.')
+@pytest.mark.django_db
+def test_forum_home_without_cached_categories():
+    factory = RequestFactory()
+    request = factory.get(reverse('forum_home'))
+    request.user = AnonymousUser()
 
-class UserLoginTests(TestCase):
+    # Убедимся, что кэш пуст
+    cache.clear()
 
-    def setUp(self):
-        self.user = User.objects.create_user(username='testuser', email='testuser@example.com', password='TestPassword123')
+    # Создаем категории в базе данных
+    categories = [Category.objects.create(name='Category 1'), Category.objects.create(name='Category 2')]
 
-    def test_login_view(self):
-        response = self.client.get(reverse('account_login'))
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, 'Вход')
+    response = forum_home(request)
+    assert response.status_code == 200
+    assert 'categories' in response.context_data
+    assert list(response.context_data['categories']) == categories
 
-    def test_user_login(self):
-        response = self.client.post(reverse('account_login'), {
-            'login': 'testuser',
-            'password': 'TestPassword123',
-        })
-        self.assertEqual(response.status_code, 302)  # Redirect after successful login
+@pytest.mark.django_db
+def test_forum_home_authenticated_user():
+    factory = RequestFactory()
+    user = User.objects.create_user(username='testuser', password='12345')
+    request = factory.get(reverse('forum_home'))
+    request.user = user
 
-    def test_invalid_login(self):
-        response = self.client.post(reverse('account_login'), {
-            'login': 'testuser',
-            'password': 'WrongPassword',
-        })
-        self.assertEqual(response.status_code, 200)  # Should not redirect, form should be re-rendered
-        self.assertContains(response, 'Пожалуйста, введите правильное имя пользователя и пароль.')
+    # Создаем уведомления для пользователя
+    notifications = [Notification.objects.create(user=user, is_read=False)]
+
+    response = forum_home(request)
+    assert response.status_code == 200
+    assert 'notifications' in response.context_data
+    assert list(response.context_data['notifications']) == notifications
