@@ -60,7 +60,6 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'debug_toolbar',
-    'pytest_django',
 ]
 
 MIDDLEWARE = [
