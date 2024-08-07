@@ -225,8 +225,7 @@ CSRF_COOKIE_AGE = 604800  # Время жизни CSRF cookies в секунда
 
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': os.path.join(BASE_DIR, 'cache'),
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
     }
 }
 # В settings.py добавьте следующие строки для использования кэширования сессий:
