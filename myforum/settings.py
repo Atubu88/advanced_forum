@@ -59,7 +59,6 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
@@ -74,8 +73,11 @@ MIDDLEWARE = [
     'allauth.account.middleware.AccountMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-
 ]
+
+if DEBUG:
+    INSTALLED_APPS += ['debug_toolbar']
+    MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware']
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
@@ -213,6 +215,16 @@ if DEBUG:
     }
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '.vercel.app']
+
+SESSION_COOKIE_AGE = 604800  # Время жизни сессии в секундах (7 дней)
+SESSION_SAVE_EVERY_REQUEST = True  # Обновлять сессию при каждом запросе
+SESSION_COOKIE_SECURE = True  # Использовать secure флаг для cookies сессии
+CSRF_COOKIE_SECURE = True  # Использовать secure флаг для CSRF cookies
+SESSION_COOKIE_HTTPONLY = True  # Использовать HttpOnly флаг для cookies сессии
+CSRF_COOKIE_HTTPONLY = True  # Использовать HttpOnly флаг для CSRF cookies
+
+# Настройки cookies
+CSRF_COOKIE_AGE = 604800  # Время жизни CSRF cookies в секундах (7 дней)
 
 # В settings.py добавьте следующие строки для использования кэширования сессий:
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'

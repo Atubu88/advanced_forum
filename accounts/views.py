@@ -173,3 +173,31 @@ class CustomLoginView(LoginView):
 class CustomSignupView(SignupView):
     form_class = CustomSignupForm
     template_name = 'accounts/signup.html'
+
+@login_required
+def edit_topic(request, topic_id):
+    topic = get_object_or_404(Topic, id=topic_id)
+    if request.user != topic.author and not request.user.is_superuser:
+        return HttpResponseForbidden()
+
+    if request.method == 'POST':
+        form = TopicForm(request.POST, instance=topic)
+        if form.is_valid():
+            form.save()
+            return redirect('topic_detail', topic_id=topic.id)
+    else:
+        form = TopicForm(instance=topic)
+
+    return render(request, 'accounts/edit_topic.html', {'form': form, 'topic': topic})
+
+@login_required
+def delete_topic(request, topic_id):
+    topic = get_object_or_404(Topic, id=topic_id)
+    if request.user != topic.author and not request.user.is_superuser:
+        return HttpResponseForbidden()
+
+    if request.method == 'POST':
+        topic.delete()
+        return redirect('subcategory_topics', subcategory_id=topic.subcategory.id)
+
+    return render(request, 'accounts/delete_topic.html', {'topic': topic})

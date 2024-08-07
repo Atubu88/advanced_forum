@@ -8,9 +8,9 @@ from django.utils.translation import gettext_lazy as _
 class TopicForm(forms.ModelForm):
     class Meta:
         model = Topic
-        fields = ['title', 'content']
+        fields = ['content']
         labels = {
-            'title': 'Название темы',
+
             'content': 'Содержание',
         }
 
@@ -20,7 +20,7 @@ class CommentForm(forms.ModelForm):
         model = Comment
         fields = ['body']
         labels = {
-            'body': 'Комментарий',  # Измените "Комментарий" на нужный вам текст
+            'body': 'Комментарий',# Измените "Комментарий" на нужный вам текст
         }
 
 class CustomLoginForm(LoginForm):

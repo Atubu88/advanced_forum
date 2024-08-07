@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Удалить тему{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="text-center">Удалить тему</h1>
+    <p>Вы уверены, что хотите удалить тему "{{ topic.title }}"?</p>
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Удалить</button>
+        <a href="{% url 'topic_detail' topic.id %}" class="btn btn-secondary">Отмена</a>
+    </form>
+</div>
+{% endblock %}

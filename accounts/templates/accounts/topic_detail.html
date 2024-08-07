@@ -10,7 +10,7 @@
 
 {% block content %}
 <div class="container">
-    <h1 class="text-center">{{ topic.title }}</h1>
+    <h1 class="text-center">{{ topic.content }}</h1>
     <p>{{ topic.body }}</p> <!-- Обновлено с {{ topic.content }} на {{ topic.body }} -->
     <p>Автор {{ topic.author }}</p>
 
@@ -34,7 +34,8 @@
                 <p>Автор {{ comment.author }} в {{ comment.created_at }}</p>
                 {% if request.user == comment.author or request.user.is_superuser %}
                 <!-- Кнопка редактирования комментария -->
-                <a href="{% url 'edit_comment' comment.id %}" class="btn btn-secondary">Редактировать</a>
+               <a href="{% url 'edit_comment' comment.id %}" class="btn btn-edit">Редактировать</a>
+
                 <!-- Форма удаления комментария -->
                 <form method="post" action="{% url 'delete_comment' comment.id %}" style="display:inline;">
                     {% csrf_token %}
