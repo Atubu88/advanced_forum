@@ -69,10 +69,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.security.SecurityMiddleware',
     'allauth.account.middleware.AccountMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
 ]
 
 if DEBUG:
@@ -226,6 +223,12 @@ CSRF_COOKIE_HTTPONLY = True  # Использовать HttpOnly флаг для
 # Настройки cookies
 CSRF_COOKIE_AGE = 604800  # Время жизни CSRF cookies в секундах (7 дней)
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': os.path.join(BASE_DIR, 'cache'),
+    }
+}
 # В settings.py добавьте следующие строки для использования кэширования сессий:
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 SESSION_CACHE_ALIAS = 'default'

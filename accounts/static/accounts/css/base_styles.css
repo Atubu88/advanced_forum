@@ -19,7 +19,7 @@
     top: 50%;
     left: 0px;
     transform: translateY(-50%);
-    height: 89px;
+    height:89px;
     border-radius: 15px;
 }
 .auth-buttons {
@@ -40,7 +40,7 @@
 .notifications {
     position: absolute;
     top: 50%;
-    right: 230px;
+    right: 750px;
     transform: translateY(-50%);
     color: white;
 }

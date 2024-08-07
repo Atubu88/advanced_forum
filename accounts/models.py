@@ -19,22 +19,24 @@ class Subcategory(models.Model):
 
 
 class Topic(models.Model):
-    subcategory = models.ForeignKey(Subcategory, related_name='topics', on_delete=models.CASCADE)
-    content = models.TextField()
+    subcategory = models.ForeignKey(Subcategory, on_delete=models.CASCADE, related_name='topics', db_index=True)
+    author = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name='topics', db_index=True)
     title = models.CharField(max_length=200)
-    body = models.TextField()
-    author = models.ForeignKey(User, related_name='topics', on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add=True)
+    content = models.TextField()
 
     def __str__(self):
         return self.title
 
+    class Meta:
+        indexes = [
+            models.Index(fields=['subcategory', 'author']),
+        ]
 
 class Comment(models.Model):
-    topic = models.ForeignKey(Topic, related_name='comments', on_delete=models.CASCADE)
+    topic = models.ForeignKey(Topic, related_name='comments', on_delete=models.CASCADE, db_index=True)
     body = models.TextField()
-    author = models.ForeignKey(User, related_name='comments', on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add=True)
+    author = models.ForeignKey(User, related_name='comments', on_delete=models.CASCADE, db_index=True)
+    created_at = models.DateTimeField(auto_now_add=True, db_index=True)
 
     def __str__(self):
         return f'Comment by {self.author} on {self.topic}'
@@ -43,7 +45,6 @@ class Comment(models.Model):
         permissions = [
             ("can_delete_any_comment", "Can delete any comment"),
         ]
-
 
 class Notification(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, db_index=True)  # Добавление индекса

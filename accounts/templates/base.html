@@ -8,9 +8,7 @@
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'accounts/css/base_styles.css' %}">
     {% block extra_css %}{% endblock %}
-    <link rel="icon"  href="{% static 'accounts/images/favicon.png' %}">
-
-
+    <link rel="icon" href="{% static 'accounts/images/favicon.png' %}">
 </head>
 <body>
     <div class="boxed">
@@ -18,6 +16,13 @@
             <div class="header">
                 {% load static %}
                 <img src="{% static 'accounts/images/logo.png' %}" alt="Логотип" class="logo">
+                <div class="notifications">
+                    {% if user.is_authenticated %}
+                        {% include 'accounts/notifications_list.html' %}
+                    {% else %}
+                        &nbsp;
+                    {% endif %}
+                </div>
                 <h1>مهاجرون</h1>
                 <div class="auth-buttons">
                     <a class="btn btn-primary" href="{% url 'forum_home' %}">Главная</a>
@@ -28,12 +33,6 @@
                         <a class="btn btn-primary" href="{% url 'account_signup' %}">Регистрация</a>
                     {% endif %}
                 </div>
-
-                {% if user.is_authenticated %}
-                <div class="notifications">
-                    {% include 'accounts/notifications_list.html' %}
-                </div>
-                {% endif %}
             </div>
             <div class="custom-text">
                 <h4 style="color: red; font-style: italic;">И напоминай, ибо напоминание приносит пользу верующим. (Сура 51, 55 аят.)</h4>
