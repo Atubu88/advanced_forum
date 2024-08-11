@@ -225,13 +225,11 @@ CSRF_COOKIE_AGE = 604800  # Время жизни CSRF cookies в секунда
 
 CACHES = {
     'default': {
-        'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': 'redis://127.0.0.1:6379/1',  # Используйте правильный номер базы данных Redis
-        'OPTIONS': {
-            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-        }
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
     }
 }
+
 # В settings.py добавьте следующие строки для использования кэширования сессий:
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 SESSION_CACHE_ALIAS = 'default'
+
