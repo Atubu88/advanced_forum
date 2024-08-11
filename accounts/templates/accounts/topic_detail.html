@@ -10,9 +10,8 @@
 
 {% block content %}
 <div class="container">
-    <h1 class="text-center">{{ topic.content }}</h1>
-    <p>{{ topic.body }}</p> <!-- Обновлено с {{ topic.content }} на {{ topic.body }} -->
-    <p>Автор {{ topic.author }}</p>
+    <h3 class="text-center">{{ topic.content }}</h3>
+    <h5 class="text-center">Автор {{ topic.author }}</h5>
 
     <!-- Блок уведомлений -->
     <div class="notifications">

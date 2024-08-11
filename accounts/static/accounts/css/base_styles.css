@@ -212,8 +212,8 @@ form input, form button {
         margin-top: 10px;
     }
     .comment {
-        width: 100%; /* Убедитесь, что комментарии занимают всю ширину */
-        padding: 10px; /* Добавьте отступы для лучшей читаемости */
+        width: 100%;
+        padding: 10px;
         box-sizing: border-box;
         border: 1px solid #ddd;
         border-radius: 10px;

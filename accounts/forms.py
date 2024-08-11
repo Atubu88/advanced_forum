@@ -10,8 +10,7 @@ class TopicForm(forms.ModelForm):
         model = Topic
         fields = ['content']
         labels = {
-
-            'content': 'Содержание',
+            'content': 'Название темы',
         }
 
 

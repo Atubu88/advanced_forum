@@ -213,7 +213,7 @@ if DEBUG:
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '.vercel.app']
 
-SESSION_COOKIE_AGE = 604800  # Время жизни сессии в секундах (7 дней)
+SESSION_COOKIE_AGE = 1209600  # Время жизни сессии в секундах (7 дней)
 SESSION_SAVE_EVERY_REQUEST = True  # Обновлять сессию при каждом запросе
 SESSION_COOKIE_SECURE = True  # Использовать secure флаг для cookies сессии
 CSRF_COOKIE_SECURE = True  # Использовать secure флаг для CSRF cookies
@@ -225,7 +225,11 @@ CSRF_COOKIE_AGE = 604800  # Время жизни CSRF cookies в секунда
 
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6379/1',  # Используйте правильный номер базы данных Redis
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
     }
 }
 # В settings.py добавьте следующие строки для использования кэширования сессий:

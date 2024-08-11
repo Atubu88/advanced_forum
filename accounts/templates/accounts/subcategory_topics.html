@@ -16,7 +16,6 @@
         <div class="topic" id="topic-{{ topic.id }}">
             <a href="{% url 'topic_detail' topic.id %}">{{ topic.content }}</a>
             <p>Автор: {{ topic.author }}</p>
-            <p>{{ topic.content }}</p> <!-- Отображение контента -->
 
             {% if request.user == topic.author or request.user.is_superuser %}
             <!-- Кнопка редактирования темы -->
