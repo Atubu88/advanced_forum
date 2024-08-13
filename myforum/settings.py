@@ -129,12 +129,12 @@ WSGI_APPLICATION = 'myforum.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 DATABASE_URL = os.environ.get('DATABASE_URL')
-url = urlparse(os.getenv('DATABASE_URL'))
+url = urlparse(DATABASE_URL)
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': url.path[1:],  # убираем начальный символ '/'
+        'NAME': url.path[1:],  # Убираем начальный символ '/'
         'USER': url.username,
         'PASSWORD': url.password,
         'HOST': url.hostname,
