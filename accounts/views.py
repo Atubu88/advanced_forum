@@ -202,7 +202,7 @@ def delete_topic(request, topic_id):
         return redirect('subcategory_topics', subcategory_id=topic.subcategory.id)
 
     return render(request, 'accounts/delete_topic.html', {'topic': topic})
-
+@method_decorator(login_required, name='dispatch')
 class CreateSubcategoryView(View):
     def get(self, request, category_id):
         category = get_object_or_404(Category, id=category_id)
