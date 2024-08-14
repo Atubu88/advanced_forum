@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.conf import settings
-
+from django.utils import timezone
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -23,6 +23,7 @@ class Topic(models.Model):
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name='topics', db_index=True)
     title = models.CharField(max_length=200)
     content = models.TextField()
+    created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.title
@@ -50,7 +51,8 @@ class Notification(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, db_index=True)  # Добавление индекса
     message = models.TextField()  # Текст уведомления
     created_at = models.DateTimeField(auto_now_add=True)  # Время создания уведомления
-    is_read = models.BooleanField(default=False, db_index=True)  # Статус прочтения уведомления
+    is_read = models.BooleanField(default=False, db_index=True)
+    related_topic = models.ForeignKey('Topic', on_delete=models.CASCADE, null=True, blank=True)  # Связь с темой# Статус прочтения уведомления
 
     def __str__(self):
         return f"Notification for {self.user.username}"

@@ -15,7 +15,7 @@
         {% for topic in topics %}
         <div class="topic" id="topic-{{ topic.id }}">
             <a href="{% url 'topic_detail' topic.id %}">{{ topic.content }}</a>
-            <p>Автор: {{ topic.author }}</p>
+            <p>Автор: {{ topic.author }} | Создано: {{ topic.created_at|date:"d M Y, H:i" }}</p>
 
             {% if request.user == topic.author or request.user.is_superuser %}
             <!-- Кнопка редактирования темы -->

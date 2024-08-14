@@ -2,6 +2,7 @@ from django.urls import path
 from .views import forum_home, SubcategoryTopicsView, TopicDetailView, notifications_view, mark_as_read
 from .views import edit_comment, delete_comment, edit_topic, delete_topic
 from .views import CustomLoginView, CustomSignupView
+from .views import CreateSubcategoryView
 
 urlpatterns = [
     path('', forum_home, name='forum_home'),
@@ -15,4 +16,5 @@ urlpatterns = [
     path('comment/<int:comment_id>/delete/', delete_comment, name='delete_comment'),
     path('login/', CustomLoginView.as_view(), name='account_login'),
     path('signup/', CustomSignupView.as_view(), name='account_signup'),
+    path('category/<int:category_id>/create_subcategory/', CreateSubcategoryView.as_view(), name='create_subcategory'),
 ]

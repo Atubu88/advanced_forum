@@ -1,6 +1,7 @@
 from django import forms
 from .models import Comment
 from .models import Topic
+from .models import Subcategory
 from allauth.account.forms import LoginForm, SignupForm
 from django.utils.translation import gettext_lazy as _
 
@@ -12,6 +13,17 @@ class TopicForm(forms.ModelForm):
         labels = {
             'content': 'Название темы',
         }
+
+
+
+class SubcategoryForm(forms.ModelForm):
+    class Meta:
+        model = Subcategory
+        fields = ['name']
+        labels = {
+            'name': 'Название',  # Указываем метку для поля 'name' на русском языке
+        }
+
 
 
 class CommentForm(forms.ModelForm):

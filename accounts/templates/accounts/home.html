@@ -19,6 +19,9 @@
             </li>
             {% endfor %}
         </ul>
+        <div class="mt-0">
+            <a href="{% url 'create_subcategory' category.id %}" class="btn btn-primary btn-sm">Создать</a>
+        </div>
     </div>
     {% endfor %}
 </div>

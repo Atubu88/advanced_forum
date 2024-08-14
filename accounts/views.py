@@ -11,6 +11,7 @@ from .forms import CustomSignupForm
 from .forms import CustomLoginForm
 from django.db.models import Prefetch
 from django.core.cache import cache
+from .forms import SubcategoryForm
 
 
 def forum_home(request):
@@ -30,7 +31,7 @@ class SubcategoryTopicsView(View):
     def get(self, request, subcategory_id):
         subcategory = get_object_or_404(
             Subcategory.objects.prefetch_related(
-                Prefetch('topics', queryset=Topic.objects.select_related('author'))
+                Prefetch('topics',  queryset=Topic.objects.select_related('author').order_by('-created_at') )
             ),
             id=subcategory_id
         )
@@ -201,3 +202,19 @@ def delete_topic(request, topic_id):
         return redirect('subcategory_topics', subcategory_id=topic.subcategory.id)
 
     return render(request, 'accounts/delete_topic.html', {'topic': topic})
+
+class CreateSubcategoryView(View):
+    def get(self, request, category_id):
+        category = get_object_or_404(Category, id=category_id)
+        form = SubcategoryForm()
+        return render(request, 'accounts/create_subcategory.html', {'form': form, 'category': category})
+
+    def post(self, request, category_id):
+        category = get_object_or_404(Category, id=category_id)
+        form = SubcategoryForm(request.POST)
+        if form.is_valid():
+            subcategory = form.save(commit=False)
+            subcategory.category = category
+            subcategory.save()
+            return redirect('subcategory_topics', subcategory_id=subcategory.id)
+        return render(request, 'accounts/create_subcategory.html', {'form': form, 'category': category})

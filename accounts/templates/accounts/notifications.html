@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Notifications{% endblock %}
+{% block title %}Уведомления{% endblock %}
 
 {% block content %}
 <div class="container">
@@ -8,7 +8,8 @@
     <ul class="list-group">
         {% for notification in notifications %}
             <li class="list-group-item {{ notification.is_read|yesno:'list-group-item-secondary,list-group-item-primary' }}">
-                <span>{{ notification.message|safe }}</span>  <!-- Убедитесь, что здесь используется фильтр safe -->
+                <!-- Рендерим текст уведомления, используя фильтр |safe, чтобы ссылки рендерились как HTML -->
+                {{ notification.message|safe }}
                 <small class="text-muted">{{ notification.created_at }}</small>
                 {% if not notification.is_read %}
                 <a href="{% url 'mark_as_read' notification.id %}" class="btn btn-success btn-sm">Mark as read</a>
@@ -18,4 +19,3 @@
     </ul>
 </div>
 {% endblock %}
-
